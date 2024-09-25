@@ -16,20 +16,18 @@ class ChimpokomonRepository extends ServiceEntityRepository
         parent::__construct($registry, Chimpokomon::class);
     }
 
-    //    /**
-    //     * @return Chimpokomon[] Returns an array of Chimpokomon objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.status = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+       /**
+        * @return Chimpokomon[] Returns an array of Chimpokomon objects
+        */
+       public function findStatusOn(): array
+       {
+           return $this->createQueryBuilder('c')
+               ->andWhere('c.status = :val')
+               ->setParameter('val', "on")
+               ->getQuery()
+               ->getResult()
+           ;
+       }
 
     //    public function findOneBySomeField($value): ?Chimpokomon
     //    {
