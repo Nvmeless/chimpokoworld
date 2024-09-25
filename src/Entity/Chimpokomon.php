@@ -18,29 +18,25 @@ class Chimpokomon
 
     #[ORM\Column(length: 255)]
     #[Groups(['chimpokomon'])]
-
     private ?string $name = null;
 
     #[ORM\Column(length: 25)]
     
     private ?string $status = null;
-
-    #[ORM\ManyToOne(inversedBy: 'chimpokomons')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['chimpokomon'])]
-
-    private ?Chimpokodex $chimpokodex = null;
-
     #[ORM\Column]
     #[Groups(['chimpokomon'])]
-
     private ?int $pv = null;
 
     #[ORM\Column]
     #[Groups(['chimpokomon'])]
-
     private ?int $pvMax = null;
 
+    #[ORM\ManyToOne(inversedBy: 'chimpokomons')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['chimpokomon'])]
+    private ?Chimpokodex $chimpokodex = null;
+
+   
     public function getId(): ?int
     {
         return $this->id;

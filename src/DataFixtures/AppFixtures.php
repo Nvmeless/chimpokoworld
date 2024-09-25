@@ -26,35 +26,37 @@ class AppFixtures extends Fixture
         $chimpokoName = ["Chaussure", "SuperChimpokomon", "ChimpokoMegamon", "Jambon"];
         $chimpokodexEntries = [];
         $maxStat = 255;
-        for ($i=0; $i < 10; $i++) { 
+        foreach ($chimpokoName as $key => $name) {
             $chimpokodexEntry = new Chimpokodex();
-            $chimpokodexEntry->setName($chimpokoName[array_rand(array: $chimpokoName)]);
+
+            $chimpokodexEntry->setName($name);
             $chimpokodexEntry->setStatus("on");
-            $chimpokodexEntry->setIdDad($this->faker->numberBetween(0, 151));
-            $chimpokodexEntry->setIdMom($this->faker->numberBetween(0, $maxStat));
+            $chimpokodexEntry->setIdDad($this->faker->numberBetween(1, 151));
+            $chimpokodexEntry->setIdMom($this->faker->numberBetween(1, $maxStat));
+
             $pvMin = $this->faker->numberBetween(0, 151);
             $chimpokodexEntry->setPvMin( $pvMin);
             $chimpokodexEntry->setPvMax($this->faker->numberBetween( $pvMin, $maxStat));
+            
             $manager->persist($chimpokodexEntry);
             $chimpokodexEntries[] = $chimpokodexEntry;
         }
 
         $manager->flush();
 
-
         for ($i=0; $i < 100; $i++) { 
             $chimpokodexEntry = $chimpokodexEntries[array_rand($chimpokodexEntries)];
             $chimpokomon = new Chimpokomon();
-
             $chimpokomon->setChimpokodex($chimpokodexEntry);
-            $chimpokomon->setName($chimpokodexEntry->getName());
             
             $pvMax = $this->faker->numberBetween($chimpokodexEntry->getPvMin(), $chimpokodexEntry->getPvMax());
-            
             $chimpokomon->setPvMax( $pvMax);
             $chimpokomon->setPv($this->faker->numberBetween( 0, $pvMax));
-            
+
+            $chimpokomon->setName($chimpokodexEntry->getName());
+
             $chimpokomon->setStatus("on");
+
             $manager->persist($chimpokomon);
         }
 

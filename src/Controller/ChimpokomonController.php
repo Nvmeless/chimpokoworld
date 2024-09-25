@@ -14,8 +14,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ChimpokomonController extends AbstractController
 {
-
-
     #[Route('/chimpokomon', name: 'app_chimpokomon_getAll')]
     public function getAllChimpokomons(
         ChimpokomonRepository $chimpokomonRepository,
