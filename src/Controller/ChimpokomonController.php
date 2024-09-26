@@ -127,7 +127,5 @@ class ChimpokomonController extends AbstractController
         $cache->invalidateTags(['chimpokomonCache']);
 
         return new JsonResponse(null, JsonResponse::HTTP_NO_CONTENT);
-
     }
-
 }

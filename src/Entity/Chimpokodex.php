@@ -14,12 +14,12 @@ class Chimpokodex
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['chimpokomon'])]
+    #[Groups(['chimpokomon', "chimpokodex"])]
 
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['chimpokomon'])]
+    #[Groups(['chimpokomon', "chimpokodex"])]
 
     private ?string $name = null;
 
@@ -27,22 +27,22 @@ class Chimpokodex
     private ?string $status = null;
 
     #[ORM\Column]
-    #[Groups(['chimpokomon'])]
+    #[Groups(['chimpokomon', "chimpokodex"])]
 
     private ?int $pvMin = null;
 
     #[ORM\Column]
-    #[Groups(['chimpokomon'])]
+    #[Groups(['chimpokomon', "chimpokodex"])]
 
     private ?int $pvMax = null;
 
     #[ORM\Column]
-    #[Groups(['chimpokomon'])]
+    #[Groups(['chimpokomon', "chimpokodex"])]
 
     private ?int $idDad = null;
 
     #[ORM\Column]
-    #[Groups(['chimpokomon'])]
+    #[Groups(['chimpokomon', "chimpokodex"])]
 
     private ?int $idMom = null;
 
@@ -50,6 +50,8 @@ class Chimpokodex
      * @var Collection<int, Chimpokomon>
      */
     #[ORM\OneToMany(targetEntity: Chimpokomon::class, mappedBy: 'chimpokodex')]
+    #[Groups(["chimpokodex"])]
+
     private Collection $chimpokomons;
 
     public function __construct()
