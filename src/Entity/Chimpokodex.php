@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-
+use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: ChimpokodexRepository::class)]
 class Chimpokodex
 {
@@ -20,7 +20,7 @@ class Chimpokodex
 
     #[ORM\Column(length: 255)]
     #[Groups(['chimpokomon', "chimpokodex"])]
-
+    #[Assert\Length(min: 3, max: 255, minMessage: "Le nom du Chimpokomon doit faire au moin {{limit}}")]
     private ?string $name = null;
 
     #[ORM\Column(length: 25)]

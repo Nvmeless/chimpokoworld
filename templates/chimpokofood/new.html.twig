@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Chimpokofood{% endblock %}
+
+{% block body %}
+    <h1>Create new Chimpokofood</h1>
+
+    {{ include('chimpokofood/_form.html.twig') }}
+
+    <a href="{{ path('app_chimpokofood_index') }}">back to list</a>
+{% endblock %}

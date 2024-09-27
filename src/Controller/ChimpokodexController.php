@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Chimpokodex;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ChimpokodexRepository;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +20,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ChimpokodexController extends AbstractController
 {
-    #[Route('/chimpokodex', name: 'app_chimpokodex_getAll', methods: ['GET'])]
+    #[Route('/api/chimpokodex', name: 'app_chimpokodex_getAll', methods: ['GET'])]
+    #[IsGranted("ROLE_ADMIN", message: "Hanhanhaaaaaan, vous n'avez pas dis le mot magiqueuuuuh")]
     public function getAllChimpokodexs(
         ChimpokodexRepository $chimpokodexRepository,
         SerializerInterface $serializer,
@@ -34,8 +37,7 @@ class ChimpokodexController extends AbstractController
         return new JsonResponse($cachedChimpokos, Response::HTTP_OK, [], true);
     }
 
-
-    #[Route('/chimpokodex/{chimpokodex}', name: 'app_chimpokodex_get', methods: ['GET'])]
+    #[Route('/api/chimpokodex/{chimpokodex}', name: 'app_chimpokodex_get', methods: ['GET'])]
     public function getChimpokodex(
         Chimpokodex $chimpokodex
     ): JsonResponse {
@@ -44,19 +46,31 @@ class ChimpokodexController extends AbstractController
 
 
 
-    #[Route('/chimpokodex', name: 'app_chimpokon_create', methods: ["POST"])]
+    #[Route('/api/chimpokodex', name: 'app_chimpokodex_create', methods: ["POST"])]
     public function createChimpokodex(
         Request $request,
         EntityManagerInterface $entityManager,
         TagAwareCacheInterface $cache,
         UrlGeneratorInterface $urlGenerator,
         ChimpokodexRepository $chimpokodexRepository,
-        SerializerInterface $serializer
+        SerializerInterface $serializer,
+        ValidatorInterface $validator
+
     ): JsonResponse {
 
         $newChimpo = $serializer->deserialize($request->getContent(), Chimpokodex::class, "json");
         $newChimpo->setStatus('on');
+        $errors = $validator->validate($newChimpo);
+        // dd($errors);
+        if ($errors->count() > 0) {
+            $messages = [];
+            foreach ($errors as $key => $error) {
+                $messages[] = $error->getMessage();
+            }
 
+
+            return new JsonResponse($serializer->serialize($messages, 'json'), JsonResponse::HTTP_BAD_REQUEST, [], true);
+        }
         $entityManager->persist($newChimpo);
 
         $entityManager->flush();
@@ -70,7 +84,7 @@ class ChimpokodexController extends AbstractController
         return new JsonResponse($jsonChimpokodex, JsonResponse::HTTP_CREATED, ["Location" => $location], true);
     }
 
-    #[Route('/chimpokodex/{chimpokodex}', name: 'app_chimpokodex_update', methods: ['PUT', 'PATCH'])]
+    #[Route('/api/chimpokodex/{chimpokodex}', name: 'app_chimpokodex_update', methods: ['PUT', 'PATCH'])]
     public function updateChimpokodex(
         Chimpokodex $chimpokodex,
         Request $request,
@@ -90,7 +104,7 @@ class ChimpokodexController extends AbstractController
 
     }
 
-    #[Route('/chimpokodex/{chimpokodex}', name: 'app_chimpokodex_delete', methods: ['DELETE'])]
+    #[Route('/api/chimpokodex/{chimpokodex}', name: 'app_chimpokodex_delete', methods: ['DELETE'])]
     public function deleteChimpokodex(
         Chimpokodex $chimpokodex,
         EntityManagerInterface $entityManager,

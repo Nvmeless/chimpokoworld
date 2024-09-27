@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ChimpokomonController extends AbstractController
 {
-    #[Route('/chimpokomon', name: 'app_chimpokomon_getAll', methods: ['GET'])]
+    #[Route('/api/chimpokomon', name: 'app_chimpokomon_getAll', methods: ['GET'])]
     public function getAllChimpokomons(
         ChimpokomonRepository $chimpokomonRepository,
         SerializerInterface $serializer,
@@ -43,7 +43,7 @@ class ChimpokomonController extends AbstractController
     }
 
 
-    #[Route('/chimpokomon/{chimpokomon}', name: 'app_chimpokomon_get', methods: ['GET'])]
+    #[Route('/api/chimpokomon/{chimpokomon}', name: 'app_chimpokomon_get', methods: ['GET'])]
     public function getChimpokomon(
         Chimpokomon $chimpokomon
     ): JsonResponse {
@@ -52,7 +52,7 @@ class ChimpokomonController extends AbstractController
 
 
 
-    #[Route('/chimpokomon', name: 'app_chimpokon_create', methods: ["POST"])]
+    #[Route('/api/chimpokomon', name: 'app_chimpokon_create', methods: ["POST"])]
     public function createChimpokomon(
         Request $request,
         EntityManagerInterface $entityManager,
@@ -80,7 +80,7 @@ class ChimpokomonController extends AbstractController
         // return $this->json();
     }
 
-    #[Route('/chimpokomon/{chimpokomon}', name: 'app_chimpokomon_update', methods: ['PUT', 'PATCH'])]
+    #[Route('/api/chimpokomon/{chimpokomon}', name: 'app_chimpokomon_update', methods: ['PUT', 'PATCH'])]
     public function updateChimpokomon(
         Chimpokomon $chimpokomon,
         Request $request,
@@ -108,7 +108,7 @@ class ChimpokomonController extends AbstractController
 
 
 
-    #[Route('/chimpokomon/{chimpokomon}', name: 'app_chimpokomon_delete', methods: ['DELETE'])]
+    #[Route('/api/chimpokomon/{chimpokomon}', name: 'app_chimpokomon_delete', methods: ['DELETE'])]
     public function deleteChimpokomon(
         Chimpokomon $chimpokomon,
         EntityManagerInterface $entityManager,
