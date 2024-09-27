@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/chimpokofood')]
 final class ChimpokofoodController extends AbstractController
 {
-    #[Route(name: 'app_chimpokofood_index', methods: ['GET'])]
+    #[Route(name: 'app_chimpokofood_getAll', methods: ['GET'])]
     public function index(ChimpokofoodRepository $chimpokofoodRepository): Response
     {
         return $this->render('chimpokofood/index.html.twig', [
